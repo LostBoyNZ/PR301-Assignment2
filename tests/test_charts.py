@@ -53,7 +53,7 @@ class TestCharts(unittest.TestCase):
 
         self.assertTrue(actual_results == expected_results)
 
-    def test_bmi_bar_chart_with_correct_data_matches_reference_chart(self):
+    def test_line_chart_with_correct_data_matches_reference_chart(self):
         # Arrange
         file_name = 'testdata\\test_output.txt'
         chart_type = "bmi"
