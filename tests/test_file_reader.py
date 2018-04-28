@@ -62,10 +62,10 @@ class TestFileReader(unittest.TestCase):
         line2 = {'gender': 'M', 'age': '45', 'sales': '999',
                  'bmi': 'Underweight', 'salary': '725',
                  'birthday': '31/12/1971', 'valid': '1'}
-        data_to_test = {'A001': line1, 'Q001': line2}
+        data_to_test = {'A001': line1, 'T991': line2}
         expected_string_1 = "['A001', 'F,', '21,', '001,', 'Normal,', '12,'," \
                             " '01/01/1996,', '1']"
-        expected_string_2 = "['Q001', 'M,', '45,', '999,', 'Underweight,'," \
+        expected_string_2 = "['T991', 'M,', '45,', '999,', 'Underweight,'," \
                             " '725,', '31/12/1971,', '1']"
         expected_result = True
 
@@ -74,6 +74,12 @@ class TestFileReader(unittest.TestCase):
         sys.stdout = captured_output
         FileReader.write_to_database(FileReader, data_to_test)
         sys.stdout = sys.__stdout__
+
+        print("---Captured Output---")
+        print(captured_output.getvalue())
+        print("---Expected Output---")
+        print(expected_string_1)
+        print(expected_string_2)
 
         # Check if the printed output includes expected strings I'm looking for
         if expected_string_1 in captured_output.getvalue()\
@@ -371,7 +377,7 @@ class TestFileReader(unittest.TestCase):
         dict_valid = {'A001': {'gender': 'F', 'age': '21', 'sales': '001',
                                'bmi': 'Normal', 'salary': '12',
                       'birthday': '01/01/1996', 'valid': '1'}}
-        expected_string_1 = "['A001', 'F,', '21,', '001,', 'Normal,', '12,'," \
+        expected_string = "['A001', 'F,', '21,', '001,', 'Normal,', '12,'," \
                             " '01/01/1996,', '1']"
         expected_result = True
 
@@ -383,7 +389,7 @@ class TestFileReader(unittest.TestCase):
         sys.stdout = sys.__stdout__
 
         # Check if the printed output includes expected strings I'm looking for
-        if expected_string_1 in captured_output.getvalue():
+        if expected_string in captured_output.getvalue():
             result = True
         else:
             result = False
