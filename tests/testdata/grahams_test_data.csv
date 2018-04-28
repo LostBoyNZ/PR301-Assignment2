@@ -1,0 +1,18 @@
+EMPID,Gender,Age,Sales,BMI,Salary,Birthday
+a001,Male,52,123,Overweight,50,23/10/1998
+Z005,F,18,624,Normal,850,25-04-1158
+C078,F,35,485,Underweight,32,15-08-1123
+F123,M,45,215,Overweight,23,12-18-1895
+T456,M,82,543,Normal,32,15/03/1935
+Y879,F,15,146,Obesity,42,13/12/1925
+4564,Male,0,0,5,0,32/02/1998
+A12,Female,100,9999,overweight,122345,18/12/2018
+#A102,male,-1,-1,over weight,-1,8/12/2000
+A1O2,female,,,170,Fifty thousand,23/10/1998
+    Z998 ,femal,5 2,1 23,$overweight,fifty thousand,3-Feb-18
+Z99 8,guy,$22,$123, overweight, Fi fty thousand,3rd Jan 2018
+,girl,Twenty two,One hundred and twenty three,,fifty$thousand,1st Jan 2018
+ ,$female,thirty,five hundred,"normal, underweight","fifty,thousand",2nd Jan 2018
+f456, ma le,30,1,",",,1.1.1998
+f12,32,2/04/1998,456,A122,32,$2/04/1998
+Y879,M,28,555,Normal,3,10/01/1982
