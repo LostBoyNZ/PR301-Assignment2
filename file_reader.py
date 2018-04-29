@@ -87,13 +87,15 @@ class FileReader(object):  # Claye
                     data_to_log = "Duplicate Key" + str(fields[0:])
                     LogFileHandler.append_file('log.txt', data_to_log)
                 else:
-                    f.dict_root.update({checked_id: {'gender': fields[1],
-                                                     'age': fields[2],
-                                                     'sales': fields[3],
-                                                     'bmi': fields[4],
-                                                     'salary': fields[5],
-                                                     'birthday': fields[6]
-                                        .rstrip(), 'valid': '0'}})
+                    test_dict = {}
+                    field_number = 1
+                    for row_name in self.row_names[1:-1]:     # Skip the id row
+                        test_dict[row_name] = fields[field_number]
+                        field_number += 1
+
+                    test_dict['valid'] = '0'
+                    f.dict_root.update({checked_id: test_dict})
+
             # Close the file to free up resources (good practice)
             file.close()
             if keep_going:
