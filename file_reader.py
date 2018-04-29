@@ -19,11 +19,15 @@ except NameError and ModuleNotFoundError and ImportError:
     print(Err.get_error_message(404, "database_excel"))
     sys.exit()
 
+try:
+    from data_fields import DataFields
+except NameError and ModuleNotFoundError and ImportError:
+    print(Err.get_error_message(404, "data_fields"))
+    sys.exit()
+
 
 class FileReader(object):  # Claye
     dict_root = {}
-    row_names = ['emp_id', 'gender', 'age', 'sales', 'bmi', 'salary',
-                 'birthday', 'valid']
 
     def __init__(self):
         self.db = CompanyDatabase
@@ -76,6 +80,7 @@ class FileReader(object):  # Claye
             f = FileReader()
             dup_keys = 0
             keep_going = True
+            data_fields = DataFields.get_data_fields(DataFields)
 
             for line in file:
                 # Split file into fields using ","
@@ -89,7 +94,9 @@ class FileReader(object):  # Claye
                 else:
                     test_dict = {}
                     field_number = 1
-                    for row_name in self.row_names[1:-1]:     # Skip the id row
+
+                    # Ignore the ID field and the Valid field for now
+                    for row_name in data_fields[1:-1]:
                         test_dict[row_name] = fields[field_number]
                         field_number += 1
 
@@ -102,41 +109,6 @@ class FileReader(object):  # Claye
                 valid_dict = DataProcessor.send_to_validate(f.dict_root,
                                                             switch, dup_keys)
                 return valid_dict
-
-    # def split_file(self, file_name, switch, separator=","):
-    #     try:
-    #         file = open(file_name, "r")
-    #     except FileNotFoundError:
-    #         print(Err.get_error_message(201))
-    #     else:
-    #         # Repeat for each line in the text file
-    #         f = FileReader()
-    #         dup_keys = 0
-    #         keep_going = True
-    #
-    #         for line in file:
-    #             # Split file into fields using ","
-    #             fields = line.split(separator)
-    #             checked_id = DataProcessor.validate_key(fields[0])
-    #             if checked_id in f.dict_root:
-    #                 dup_keys += 1
-    #                 fields[6] = fields[6].rstrip()
-    #                 data_to_log = "Duplicate Key" + str(fields[0:])
-    #                 LogFileHandler.append_file('log.txt', data_to_log)
-    #             else:
-    #                 f.dict_root.update({checked_id: {'gender': fields[1],
-    #                                                  'age': fields[2],
-    #                                                  'sales': fields[3],
-    #                                                  'bmi': fields[4],
-    #                                                  'salary': fields[5],
-    #                                                  'birthday': fields[6]
-    #                                     .rstrip(), 'valid': '0'}})
-    #         # Close the file to free up resources (good practice)
-    #         file.close()
-    #         if keep_going:
-    #             valid_dict = DataProcessor.send_to_validate(f.dict_root,
-    #                                                         switch, dup_keys)
-    #             return valid_dict
 
     @staticmethod
     def remove_duplicates(file_name):   # Graham
@@ -270,6 +242,7 @@ class FileReader(object):  # Claye
         keys += dict_valid.keys()
         data += dict_valid.values()
         count = 0
+        data_fields = DataFields.get_data_fields(DataFields)
 
         persons_attributes_list = []
 
@@ -281,13 +254,13 @@ class FileReader(object):  # Claye
 
                 persons_attributes_list.append(db_id)
 
-                for row_name in self.row_names:
-                    if row_name is not "emp_id" and row_name is not "valid":
-                        try:
-                            to_add = str(item[row_name]) + ","
-                            persons_attributes_list.append(to_add)
-                        except KeyError:
-                            pass
+                # Ignore the ID field and the Valid field for now
+                for row_name in data_fields[1:-1]:
+                    try:
+                        to_add = str(item[row_name]) + ","
+                        persons_attributes_list.append(to_add)
+                    except KeyError:
+                        pass
 
                 persons_attributes_list.append(db_v)
                 db.insert_staff([persons_attributes_list])
