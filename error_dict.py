@@ -29,6 +29,7 @@ class ErrorDict:  # Claye
             403: "Warning - {} not found".format(name),
             404: "Fatal Error - {} not found".format(name),
             405: "Error - {} file is read only".format(name),
+            406: "Fatal Unknown Error with {}".format(name),
             # Database Errors ----- # Graham
             501: "Error - {} key is not valid, please try again".format(name),
             # Chart Errors ----- # Graham
