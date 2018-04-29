@@ -21,11 +21,16 @@ except NameError and ModuleNotFoundError and ImportError:
 
 
 class FileReader(object):  # Claye
-
     dict_root = {}
+    row_names = ['emp_id', 'gender', 'age', 'sales', 'bmi', 'salary',
+                 'birthday', 'valid']
 
     def __init__(self):
         self.db = CompanyDatabase
+
+    @staticmethod
+    def get_input(text):
+        return input(text)
 
     def call_file(self, switch, separator):
         file_name = input("Please enter the filename to read data from >>> ")
@@ -96,6 +101,41 @@ class FileReader(object):  # Claye
                                                             switch, dup_keys)
                 return valid_dict
 
+    # def split_file(self, file_name, switch, separator=","):
+    #     try:
+    #         file = open(file_name, "r")
+    #     except FileNotFoundError:
+    #         print(Err.get_error_message(201))
+    #     else:
+    #         # Repeat for each line in the text file
+    #         f = FileReader()
+    #         dup_keys = 0
+    #         keep_going = True
+    #
+    #         for line in file:
+    #             # Split file into fields using ","
+    #             fields = line.split(separator)
+    #             checked_id = DataProcessor.validate_key(fields[0])
+    #             if checked_id in f.dict_root:
+    #                 dup_keys += 1
+    #                 fields[6] = fields[6].rstrip()
+    #                 data_to_log = "Duplicate Key" + str(fields[0:])
+    #                 LogFileHandler.append_file('log.txt', data_to_log)
+    #             else:
+    #                 f.dict_root.update({checked_id: {'gender': fields[1],
+    #                                                  'age': fields[2],
+    #                                                  'sales': fields[3],
+    #                                                  'bmi': fields[4],
+    #                                                  'salary': fields[5],
+    #                                                  'birthday': fields[6]
+    #                                     .rstrip(), 'valid': '0'}})
+    #         # Close the file to free up resources (good practice)
+    #         file.close()
+    #         if keep_going:
+    #             valid_dict = DataProcessor.send_to_validate(f.dict_root,
+    #                                                         switch, dup_keys)
+    #             return valid_dict
+
     @staticmethod
     def remove_duplicates(file_name):   # Graham
         ids_already_in_file = []
@@ -141,10 +181,6 @@ class FileReader(object):  # Claye
             print("Data Not saved")
         else:
             print(Err.get_error_message(102))
-
-    @staticmethod
-    def get_input(text):
-        return input(text)
 
     def save_pickle_file(self, data_to_write):  # Claye, Graham
         u = self.get_input("Are you sure you want to save data? Y/N >>> ")
@@ -233,31 +269,33 @@ class FileReader(object):  # Claye
         data += dict_valid.values()
         count = 0
 
+        persons_attributes_list = []
+
         for item in data:
-            if item['valid'] == '1':
+            if item['valid']:
                 db_v = item['valid']
                 db_id = keys[count]
                 count += 1
-                if item['gender']:
-                    db_g = item['gender'] + ","
-                if item['age']:
-                    db_a = item['age'] + ","
-                if item['sales']:
-                    db_sale = item['sales'] + ","
-                if item['bmi']:
-                    db_bm = item['bmi'] + ","
-                if item['salary']:
-                    db_sala = item['salary'] + ","
-                if item['birthday']:
-                    db_bi = item['birthday'] + ","
 
-                db.insert_staff([(db_id, db_g, db_a, db_sale, db_bm,
-                                  db_sala, db_bi, db_v)])
+                persons_attributes_list.append(db_id)
+
+                for row_name in self.row_names:
+                    if row_name is not "emp_id" and row_name is not "valid":
+                        try:
+                            to_add = str(item[row_name]) + ","
+                            persons_attributes_list.append(to_add)
+                        except KeyError:
+                            pass
+
+                persons_attributes_list.append(db_v)
+                db.insert_staff([persons_attributes_list])
+                persons_attributes_list = []
 
         print(count, "persons added! Congratulations!")
         # Rochelle
-        #view_db = input("Do you want to see data saved to database? Y/N >>> ")
-        #if view_db.upper() == "Y":
-        db.get_staff()
+        view_db = self.get_input(
+            "Do you want to see data saved to database? Y/N >>> ")
+        if view_db.upper() == "Y":
+            db.get_staff()
 
         db.close()
