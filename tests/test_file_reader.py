@@ -57,6 +57,7 @@ class TestFileReader(unittest.TestCase):
 
     def test_write_to_database_with_valid_data(self):
         # Arrange
+        user_input = ['Y']
         line1 = {'gender': 'F', 'age': '21', 'sales': '001', 'bmi': 'Normal',
                  'salary': '12', 'birthday': '01/01/1996', 'valid': '1'}
         line2 = {'gender': 'M', 'age': '45', 'sales': '999',
@@ -72,14 +73,9 @@ class TestFileReader(unittest.TestCase):
         # Act
         captured_output = io.StringIO()
         sys.stdout = captured_output
-        FileReader.write_to_database(FileReader, data_to_test)
+        with patch('builtins.input', side_effect=user_input):
+            FileReader.write_to_database(FileReader, data_to_test)
         sys.stdout = sys.__stdout__
-
-        print("---Captured Output---")
-        print(captured_output.getvalue())
-        print("---Expected Output---")
-        print(expected_string_1)
-        print(expected_string_2)
 
         # Check if the printed output includes expected strings I'm looking for
         if expected_string_1 in captured_output.getvalue()\
@@ -373,7 +369,7 @@ class TestFileReader(unittest.TestCase):
 
     def test_write_file_choosing_database_option(self):
         # Arrange
-        user_input = ['Y', "D"]
+        user_input = ['Y', "D", "Y"]
         dict_valid = {'A001': {'gender': 'F', 'age': '21', 'sales': '001',
                                'bmi': 'Normal', 'salary': '12',
                       'birthday': '01/01/1996', 'valid': '1'}}
