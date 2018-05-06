@@ -64,7 +64,7 @@ class TestDatabaseExcel(unittest.TestCase):
 
         # Act
         with patch('builtins.input', side_effect=user_input):
-            result = DatabaseExcel.create_connection(DatabaseExcel, wb, "")
+            result = DatabaseExcel.get_data_from_excel(DatabaseExcel, wb, "")
 
         # Assert
         self.assertTrue(result == expected_data)
@@ -88,8 +88,10 @@ class TestDatabaseExcel(unittest.TestCase):
 
         # Act
         with patch('builtins.input', side_effect=user_input):
-            result = DatabaseExcel.create_connection(DatabaseExcel, wb, "")
+            result = DatabaseExcel.get_data_from_excel(DatabaseExcel, wb, "")
 
+
+        print(result)
         # Assert
         self.assertTrue(result == expected_data)
 
@@ -103,7 +105,7 @@ class TestDatabaseExcel(unittest.TestCase):
         captured_output = io.StringIO()
         sys.stdout = captured_output
         with patch('builtins.input', side_effect=user_input):
-            result = DatabaseExcel.create_connection(DatabaseExcel, wb, "")
+            result = DatabaseExcel.get_data_from_excel(DatabaseExcel, wb, "")
         sys.stdout = sys.__stdout__
 
         # Check if the printed output includes expected strings I'm looking for
@@ -125,7 +127,7 @@ class TestDatabaseExcel(unittest.TestCase):
         captured_output = io.StringIO()
         sys.stdout = captured_output
         with patch('builtins.input', side_effect=user_input):
-            result = DatabaseExcel.create_connection(DatabaseExcel, wb, "")
+            result = DatabaseExcel.get_data_from_excel(DatabaseExcel, wb, "")
         sys.stdout = sys.__stdout__
 
         # Check if the printed output includes expected strings I'm looking for
@@ -147,7 +149,7 @@ class TestDatabaseExcel(unittest.TestCase):
         captured_output = io.StringIO()
         sys.stdout = captured_output
         with patch('builtins.input', side_effect=user_input):
-            result = DatabaseExcel.create_connection(DatabaseExcel, wb, "")
+            result = DatabaseExcel.get_data_from_excel(DatabaseExcel, wb, "")
         sys.stdout = sys.__stdout__
 
         # Check if the printed output includes expected strings I'm looking for
