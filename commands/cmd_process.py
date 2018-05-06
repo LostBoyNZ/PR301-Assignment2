@@ -15,9 +15,9 @@ except NameError and ModuleNotFoundError and ImportError:
     sys.exit()
 
 try:
-    from file_reader import FileReader
+    from file_controller import FileController
 except NameError and ModuleNotFoundError and ImportError:
-    print("Fatal Error - file_reader.py not found.")
+    print("Fatal Error - file_controller.py not found.")
     sys.exit()
 
 
@@ -56,8 +56,8 @@ class Process(Command):  # Claye
             separator = self.user_string
         else:
             separator = ","
-        i = FileReader()
-        FileReader.call_file(i, self.detail_mode, separator)
+        i = FileController()
+        FileController.call_file(i, self.detail_mode, separator)
 
     # put the methods for each switch here
     def _detail(self):
