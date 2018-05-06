@@ -1,7 +1,5 @@
 # Graham
 import sys
-from datetime import datetime
-
 from openpyxl import load_workbook
 
 try:
@@ -33,6 +31,7 @@ class DatabaseExcel(object):  # Graham
 
     row_names = ['emp_id', 'gender', 'age', 'sales',
                  'bmi', 'salary', 'birthday', 'valid']
+    the_sheet = None
 
     @staticmethod
     def get_input(text):
@@ -76,44 +75,63 @@ class DatabaseExcel(object):  # Graham
 
         return wb
 
-    def create_connection(self, wb, switch):
-        sheet = self.choose_sheet(self, wb)
+    def set_sheet(self, sheet):
+        self.the_sheet = sheet
 
+    def get_sheet(self):
+        return self.the_sheet
+
+    @staticmethod
+    def get_sheet_size(sheet):
+        sheet_size = {'Col Count': sheet.max_column,
+                      'Row Count': sheet.max_row}
+
+        return sheet_size
+
+    @staticmethod
+    def append_log(data_to_log):
+        Lfh.append_file('log.txt', data_to_log)
+
+    def check_for_duplicate_key(self, key, keys):
+        if key in keys:
+            self.append_log("Duplicate Key" + str(key))
+
+    def create_connection(self, switch):
         target_column = 2
         target_row = 1
-
-        max_column = sheet.max_column
-        max_row = sheet.max_row
 
         data_row = []
         row_dict = {}
         keys = []
         data_to_process = {}
+        dup_keys = []
+
+        sheet = self.get_sheet(self)
 
         i = 0
-        dup_keys = 0
         for row in self.row_names:
             row_dict[self.row_names[i]]: ''
             i = i + 1
 
-        for row in range(0, max_row):
+        row_count = self.get_sheet_size(sheet)['Row Count']
+
+        for row in range(0, row_count):
 
             # Get the first value from the row to set as the key
             output = sheet.cell(row=target_row, column=1).value
             key = dp.validate_key(str(output))
 
             # Check if it's a duplicate key
-            if key in keys:
-                dup_keys += 1
-                data_to_log = "Duplicate Key" + str(key)
-                Lfh.append_file('log.txt', data_to_log)
+            if self.check_for_duplicate_key(self, key, keys):
+                dup_keys.append(key)
 
             # Add that key to the list of all keys
             keys.append(key)
             data_to_process[key] = {}
 
             col_num = 0
-            for column in range(0, max_column):
+            col_count = self.get_sheet_size(sheet)['Col Count']
+            for column in range(0, col_count):
                 output = sheet.cell(row=target_row, column=target_column).value
                 data_row.append(str(output))
 
@@ -133,5 +151,17 @@ class DatabaseExcel(object):  # Graham
 
         # Send the data to be processed
         dict_valid = dp.send_to_validate(data_to_process, switch, dup_keys)
+
+        return dict_valid
+
+    def get_data_from_excel(self, wb, switch):
+        dict_valid = []
+
+        try:
+            self.set_sheet(self, self.choose_sheet(self, wb))
+        except TypeError:
+            self.set_sheet(self, self.choose_sheet(wb))
+
+        dict_valid = self.create_connection(self, switch)
 
         return dict_valid
