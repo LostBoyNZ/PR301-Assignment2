@@ -34,11 +34,8 @@ class TestCharts(unittest.TestCase):
         calc_data = CalcData()
         calc_data.calculate(file_contents, chart_type)
 
-        age_list = calc_data.get_age_list()
-        salary_list = calc_data.get_salary_list()
-
         # Act
-        ChartLine.create_line_grid(ChartLine, age_list, salary_list)
+        calc_data.line_chart()
 
         # Assert
         actual_age_list = ChartLine.get_age_list(ChartLine)
@@ -52,34 +49,6 @@ class TestCharts(unittest.TestCase):
                           actual_y_label, actual_x_label, actual_grid}
 
         self.assertTrue(actual_results == expected_results)
-
-    def test_line_chart_with_correct_data_matches_reference_chart(self):
-        # Arrange
-        file_name = 'testdata\\test_output.txt'
-        chart_type = "bmi"
-        expected_image_file = 'reference_charts\\bar_chart_bmi.png'
-        actual_image_file = 'created_charts\\bar_chart.png'
-
-        file_contents = []
-        with open(file_name, "r") as file:
-            for line in file:
-                a_line = line.rstrip()
-                file_contents.append(a_line)
-        file.close()
-
-        calc_data = CalcData()
-        calc_data.calculate(file_contents, chart_type)
-
-        # Act
-        calc_data.bar_chart(chart_type)
-
-        # Assert
-        if filecmp.cmp(expected_image_file, actual_image_file, shallow=False):
-            chart_images_match = True
-        else:
-            chart_images_match = False
-
-        self.assertTrue(chart_images_match)
 
     def test_bmi_bar_chart_with_bad_data_does_not_match_reference_chart(self):
         # Arrange
