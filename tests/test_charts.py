@@ -8,21 +8,18 @@ class TestCharts(unittest.TestCase):
 
     def test_line_chart_age_and_salary_gets_correct_data(self):
         # Arrange
+        result = False
         file_name = 'testdata\\test_output.txt'
         chart_type = "line"
-        expected_age_list = (
-                            20, 20, 21, 21, 21, 21, 21, 21, 45, 45, 45, 45,
-                            46, 46, 46)
-        expected_salary_list = (
-                                12, 12, 12, 12, 12, 12, 12, 12, 75, 725, 725,
-                                725, 725, 725, 725)
+        expected_age_list = ['21', '45', '21', '21', '45', '45', '21', '21',
+                             '21', '45', '46', '46', '46', '20', '20']
+        expected_salary_list = ['12', '725', '12', '12', '725', '725', '12',
+                                '12', '12', '75', '725', '725', '725', '12',
+                                '12']
         expected_title = 'Salary Vs Age'
         expected_y_label = "Salary"
         expected_x_label = "Age of Staff"
         expected_grid = True
-        expected_results = {expected_age_list, expected_salary_list,
-                            expected_title, expected_y_label,
-                            expected_x_label, expected_grid}
 
         file_contents = []
         with open(file_name, "r") as file:
@@ -34,52 +31,26 @@ class TestCharts(unittest.TestCase):
         calc_data = CalcData()
         calc_data.calculate(file_contents, chart_type)
 
-        age_list = calc_data.get_age_list()
-        salary_list = calc_data.get_salary_list()
-
         # Act
-        ChartLine.create_line_grid(ChartLine, age_list, salary_list)
+        calc_data.line_chart()
 
         # Assert
-        actual_age_list = ChartLine.get_age_list(ChartLine)
-        actual_salary_list = ChartLine.get_salary_list(ChartLine)
+        actual_age_list = ChartLine.get_data(ChartLine)[0]
+        actual_salary_list = ChartLine.get_data(ChartLine)[1]
         actual_title = ChartLine.get_title(ChartLine)
         actual_y_label = ChartLine.get_y_label(ChartLine)
         actual_x_label = ChartLine.get_x_label(ChartLine)
         actual_grid = ChartLine.get_grid(ChartLine)
 
-        actual_results = {actual_age_list, actual_salary_list, actual_title,
-                          actual_y_label, actual_x_label, actual_grid}
+        if actual_age_list == expected_age_list:
+            if actual_salary_list == expected_salary_list:
+                if actual_title == expected_title:
+                    if actual_x_label == expected_x_label:
+                        if actual_y_label == expected_y_label:
+                            if actual_grid == expected_grid:
+                                result = True
 
-        self.assertTrue(actual_results == expected_results)
-
-    def test_line_chart_with_correct_data_matches_reference_chart(self):
-        # Arrange
-        file_name = 'testdata\\test_output.txt'
-        chart_type = "bmi"
-        expected_image_file = 'reference_charts\\bar_chart_bmi.png'
-        actual_image_file = 'created_charts\\bar_chart.png'
-
-        file_contents = []
-        with open(file_name, "r") as file:
-            for line in file:
-                a_line = line.rstrip()
-                file_contents.append(a_line)
-        file.close()
-
-        calc_data = CalcData()
-        calc_data.calculate(file_contents, chart_type)
-
-        # Act
-        calc_data.bar_chart(chart_type)
-
-        # Assert
-        if filecmp.cmp(expected_image_file, actual_image_file, shallow=False):
-            chart_images_match = True
-        else:
-            chart_images_match = False
-
-        self.assertTrue(chart_images_match)
+        self.assertTrue(result)
 
     def test_bmi_bar_chart_with_bad_data_does_not_match_reference_chart(self):
         # Arrange
