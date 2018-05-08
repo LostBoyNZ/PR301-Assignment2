@@ -1,5 +1,4 @@
 import sys
-import os
 
 from openpyxl import load_workbook
 
@@ -112,8 +111,15 @@ class FileReader(object):
                                                             switch, dup_keys)
                 return valid_dict
 
-    def load_pickle_file(self):  # Claye, Graham
-        file_target = input("Please input the filename to load from >>> ")
+    def load_pickle_file(self, file_name=""):  # Claye, Graham
+        file = None
+        lines = ""
+        if file_name == "":
+            file_target = self.get_input(
+                "Please input the filename to load from >>> ")
+        else:
+            file_target = file_name
+
         try:
             file = open(file_target, "rb")
         except FileNotFoundError:
@@ -121,8 +127,9 @@ class FileReader(object):
         except OSError:
             print(Err.get_error_message(103))
 
-        with open(file_target) as file:
-            lines = file.readlines()
+        if file:
+            with open(file_target) as file:
+                lines = file.readlines()
 
         print(lines)
         return lines
