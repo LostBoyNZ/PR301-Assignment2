@@ -19,23 +19,78 @@ except Exception as e:
     print(Err.get_error_message(901, e))
     sys.exit()
 
+
 class ChartPie(object):  # Graham
+    data = []
+    title = ""
+    fig_labels = ""
+    fig_title = ""
+    y_label = ""
+    x_label = ""
+    grid = False
+    output_file_name = ""
 
-    def create_pie_chart(self, data, attributes):
-        chart_data = ""
-        title = attributes['title']
-        data_labels = attributes['data_labels']
-        window_title = attributes['window_title']
+    def set_data(self, new_data):
+        self.data = new_data
 
-        sizes = data
-        labels = data_labels
+    def set_title(self, new_data):
+        self.title = new_data
+
+    def set_fig_labels(self, new_data):
+        self.fig_labels = new_data
+
+    def set_fig_title(self, new_data):
+        self.fig_title = new_data
+
+    def set_x_label(self, new_data):
+        self.x_label = new_data
+
+    def set_y_label(self, new_data):
+        self.y_label = new_data
+
+    def set_grid(self, new_data):
+        self.grid = new_data
+
+    def set_output_file_name(self, new_data):
+        self.output_file_name = new_data
+
+    def get_data(self):
+        return self.data
+
+    def get_title(self):
+        return self.title
+
+    def get_fig_labels(self):
+        return self.fig_labels
+
+    def get_fig_title(self):
+        return self.fig_title
+
+    def get_x_label(self):
+        return self.x_label
+
+    def get_y_label(self):
+        return self.y_label
+
+    def get_x_label(self):
+        return self.x_label
+
+    def get_grid(self):
+        return self.grid
+
+    def get_output_file_name(self):
+        return self.output_file_name
+
+    def create_pie_chart(self):
+        sizes = self.get_data(self)
+        labels = self.get_fig_labels(self)
 
         fig1, ax1 = plt.subplots()
         ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
         ax1.axis('equal')
-        ax1.set_title(title)
+        ax1.set_title(self.get_fig_title(self))
         fig = plt.gcf()
-        fig.canvas.set_window_title(window_title)
+        fig.canvas.set_window_title(self.get_title(self))
 
         plt.show()
-        fig.savefig('created_charts\\pie_chart.png')
+        fig.savefig(self.get_output_file_name(self))

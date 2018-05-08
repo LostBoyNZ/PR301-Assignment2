@@ -372,67 +372,106 @@ class CalcData(object):
                             self.calc_bar_birthday(value)
 
     def line_chart(self):
-        i = ChartLine()
-        i.create_line_grid(self.age_list, self.salary_list)
+        ChartClass = ChartLine
+        title = "Salary Vs Age"
+        x_label = "Age of Staff"
+        y_label = "Salary"
+        output_file_name = 'created_charts\\line_chart.png'
+        data = [self.age_list, self.salary_list]
+
+        ChartClass.set_title(ChartClass, title)
+        ChartClass.set_x_label(ChartClass, x_label)
+        ChartClass.set_y_label(ChartClass, y_label)
+        ChartClass.set_output_file_name(ChartClass, output_file_name)
+        ChartClass.set_data(ChartClass, data)
+
+        if title:
+            ChartClass.create_line_grid(ChartClass)
 
     # depending on user chart choice add data to chart to output
     def bar_chart(self, choice):
-        i = ChartBar()
+        ChartClass = ChartBar
+        title = ""
         if choice == 'bmi':
-            i.set_title = 'BMI'
-            i.set_y_label = 'Number of Staff'
-            i.set_objects = ('Obesity', 'Overweight', 'Normal', 'Underweight')
-            i.set_data = [self.get_count_bmi_ov(), self.get_count_bmi_ob(),
-                          self.get_count_bmi_un(), self.get_count_bmi_no()]
-            i.set_fig_title = 'BMI Chart'
-
-            title = 'BMI'
-            y_label = 'Number of Staff'
-            objects = ('Obesity', 'Overweight', 'Normal', 'Underweight')
+            title = "BMI"
+            fig_title = "BMI Chart"
+            y_label = "Number of Staff"
+            fig_labels = ['Obesity', 'Overweight', 'Normal', 'Underweight']
+            output_file_name = 'created_charts\\bar_chart.png'
             data = [self.get_count_bmi_ov(), self.get_count_bmi_ob(),
-                          self.get_count_bmi_un(), self.get_count_bmi_no()]
-            fig_title = 'BMI Chart'
+                    self.get_count_bmi_un(), self.get_count_bmi_no()]
 
-            i.create_bar_chart(title, y_label, objects, data, fig_title)
+            ChartClass.set_title(ChartClass, title)
+            ChartClass.set_y_label(ChartClass, y_label)
+            ChartClass.set_fig_labels(ChartClass, fig_labels)
+            ChartClass.set_fig_title(ChartClass, fig_title)
+            ChartClass.set_output_file_name(ChartClass, output_file_name)
+            ChartClass.set_data(ChartClass, data)
+
         elif choice == 'birthday':
             title = 'Birth Months'
             y_label = 'Number of Staff'
-            objects = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
-                       'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+            fig_labels = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
+                          'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+            fig_title = 'Birth Months Chart'
+            output_file_name = 'created_charts\\bar_chart.png'
             data = [self.get_count_birth_jan(), self.get_count_birth_feb(),
                     self.get_count_birth_mar(), self.get_count_birth_apr(),
                     self.get_count_birth_may(), self.get_count_birth_jun(),
                     self.get_count_birth_jul(), self.get_count_birth_aug(),
                     self.get_count_birth_sep(), self.get_count_birth_oct(),
                     self.get_count_birth_nov(), self.get_count_birth_dec()]
-            fig_title = 'Birth Months Chart'
-            i.create_bar_chart(title, y_label, objects, data, fig_title)
+
+            ChartClass.set_title(ChartClass, title)
+            ChartClass.set_y_label(ChartClass, y_label)
+            ChartClass.set_fig_labels(ChartClass, fig_labels)
+            ChartClass.set_fig_title(ChartClass, fig_title)
+            ChartClass.set_output_file_name(ChartClass, output_file_name)
+            ChartClass.set_data(ChartClass, data)
+
+        if title:
+            ChartBar.create_bar_chart(ChartBar)
 
     def pie_chart(self, choice):
-        chart = ChartPie()
-        data_labels = []
+        ChartClass = ChartPie
         title = ""
-        window_title = ""
-        data = []
-
         if choice == 'gender':
-            data_labels = "Female", "Male"
-            title = "Gender of Staff"
-            window_title = "Gender Pie Graph"
+            title = "Gender Pie Graph"
+            fig_title = "Gender of Staff"
+            y_label = "Number of Staff"
+            fig_labels = "Female", "Male"
+            output_file_name = "created_charts\\pie_chart.png"
             data = [self.get_count_gender_f(), self.get_count_gender_m()]
+
+            ChartClass.set_title(ChartClass, title)
+            ChartClass.set_y_label(ChartClass, y_label)
+            ChartClass.set_fig_labels(ChartClass, fig_labels)
+            ChartClass.set_fig_title(ChartClass, fig_title)
+            ChartClass.set_output_file_name(ChartClass, output_file_name)
+            ChartClass.set_data(ChartClass, data)
+
         elif choice == 'sales':
-            data_labels = "< 250", "250 - 499", "500 - 749", "750 - 999"
             title = "Sales Brackets of Staff"
-            window_title = "Sales Brackets of Staff"
-            data = [self.get_count_sales_group1(), self.get_count_sales_group2(),
-                    self.get_count_sales_group3(), self.get_count_sales_group4()]
+            fig_title = "Sales Brackets of Staff"
+            y_label = "Number of Staff"
+            fig_labels = "< 250", "250 - 499", "500 - 749", "750 - 999"
+            output_file_name = "created_charts\\pie_chart.png"
+            data = [self.get_count_sales_group1(),
+                    self.get_count_sales_group2(),
+                    self.get_count_sales_group3(),
+                    self.get_count_sales_group4()]
+
+            ChartClass.set_title(ChartClass, title)
+            ChartClass.set_y_label(ChartClass, y_label)
+            ChartClass.set_fig_labels(ChartClass, fig_labels)
+            ChartClass.set_fig_title(ChartClass, fig_title)
+            ChartClass.set_output_file_name(ChartClass, output_file_name)
+            ChartClass.set_data(ChartClass, data)
         else:
             print(Err.get_error_message(601))
 
         if title:
-            attributes = {'title': title, 'data_labels': data_labels,
-                          'window_title': window_title}
-            chart.create_pie_chart(data, attributes)
+            ChartClass.create_pie_chart(ChartClass)
 
 
 if __name__ == "__main__":

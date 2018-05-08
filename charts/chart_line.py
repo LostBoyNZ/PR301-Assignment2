@@ -14,39 +14,53 @@ except NameError and ModuleNotFoundError and ImportError:
 
 
 class ChartLine(object):
-    salary_list = []
-    age_list = []
+    data = []
     title = ""
+    fig_labels = ""
+    fig_title = ""
     y_label = ""
     x_label = ""
     grid = False
+    output_file_name = ""
 
-    def set_salary_list(self, new_data):
-        self.salary_list = new_data
-
-    def set_age_list(self, new_data):
-        self.age_list = new_data
+    def set_data(self, new_data):
+        self.data = new_data
 
     def set_title(self, new_data):
         self.title = new_data
 
-    def set_y_label(self, new_data):
-        self.y_label = new_data
+    def set_fig_labels(self, new_data):
+        self.fig_labels = new_data
+
+    def set_fig_title(self, new_data):
+        self.fig_title = new_data
 
     def set_x_label(self, new_data):
         self.x_label = new_data
 
+    def set_y_label(self, new_data):
+        self.y_label = new_data
+
     def set_grid(self, new_data):
         self.grid = new_data
 
-    def get_salary_list(self):
-        return self.salary_list
+    def set_output_file_name(self, new_data):
+        self.output_file_name = new_data
 
-    def get_age_list(self):
-        return self.age_list
+    def get_data(self):
+        return self.data
 
     def get_title(self):
         return self.title
+
+    def get_fig_labels(self):
+        return self.fig_labels
+
+    def get_fig_title(self):
+        return self.fig_title
+
+    def get_x_label(self):
+        return self.x_label
 
     def get_y_label(self):
         return self.y_label
@@ -57,24 +71,23 @@ class ChartLine(object):
     def get_grid(self):
         return self.grid
 
-    def create_line_grid(self, age_list, salary_list):
+    def get_output_file_name(self):
+        return self.output_file_name
+
+    def create_line_grid(self):
+        age_list = self.get_data(self)[0]
+        salary_list = self.get_data(self)[1]
         salary_list = [int(i) for i in salary_list]
         age_list = [int(i) for i in age_list]
         age_list, salary_list = zip(*sorted(zip(age_list, salary_list)))
-
-        self.set_salary_list(self, salary_list)
-        self.set_age_list(self, age_list)
-
-        age_list = self.get_age_list(self)
-        salary_list = self.get_salary_list(self)
 
         self.set_title(self, 'Salary Vs Age')
         self.set_y_label(self, 'Salary')
         self.set_x_label(self, 'Age of Staff')
         self.set_grid(self, True)
 
-        list1 = self.get_age_list(self)
-        list2 = self.get_salary_list(self)
+        list1 = age_list
+        list2 = salary_list
 
         plt.plot(list1, list2)
 
@@ -86,4 +99,4 @@ class ChartLine(object):
         fig = plt.gcf()
         fig.canvas.set_window_title(self.get_title(self))
         plt.show()
-        fig.savefig('created_charts\\line_chart.png')
+        fig.savefig(self.get_output_file_name(self))
