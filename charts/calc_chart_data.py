@@ -372,33 +372,42 @@ class CalcData(object):
                             self.calc_bar_birthday(value)
 
     def line_chart(self):
-        i = ChartLine()
-        i.create_line_grid(self.age_list, self.salary_list)
+        title = "Salary Vs Age"
+        x_label = "Age of Staff"
+        y_label = "Salary"
+        output_file_name = 'created_charts\\line_chart.png'
+        data1 = self.age_list
+        data2 = self.salary_list
+
+        ChartLine.set_title(ChartLine, title)
+        ChartLine.set_x_label(ChartLine, x_label)
+        ChartLine.set_y_label(ChartLine, y_label)
+
+        ChartLine.create_line_grid(ChartLine, data1, data2, output_file_name)
 
     # depending on user chart choice add data to chart to output
     def bar_chart(self, choice):
         i = ChartBar()
         if choice == 'bmi':
-            i.set_title = 'BMI'
-            i.set_y_label = 'Number of Staff'
-            i.set_objects = ('Obesity', 'Overweight', 'Normal', 'Underweight')
-            i.set_data = [self.get_count_bmi_ov(), self.get_count_bmi_ob(),
-                          self.get_count_bmi_un(), self.get_count_bmi_no()]
-            i.set_fig_title = 'BMI Chart'
-
-            title = 'BMI'
-            y_label = 'Number of Staff'
-            objects = ('Obesity', 'Overweight', 'Normal', 'Underweight')
-            data = [self.get_count_bmi_ov(), self.get_count_bmi_ob(),
-                          self.get_count_bmi_un(), self.get_count_bmi_no()]
+            title = "BMI"
             fig_title = 'BMI Chart'
+            y_label = "Number of Staff"
+            data_labels = ['Obesity', 'Overweight', 'Normal', 'Underweight']
+            output_file_name = 'created_charts\\bar_chart.png'
 
-            i.create_bar_chart(title, y_label, objects, data, fig_title)
+            ChartBar.set_title(ChartBar, title)
+            ChartBar.set_y_label(ChartBar, y_label)
+            ChartBar.set_labels(ChartBar, data_labels)
+            ChartBar.set_fig_title(ChartBar, fig_title)
+
+            data = [self.get_count_bmi_ov(), self.get_count_bmi_ob(),
+                    self.get_count_bmi_un(), self.get_count_bmi_no()]
+            ChartBar.create_bar_chart(ChartBar, data, output_file_name)
         elif choice == 'birthday':
             title = 'Birth Months'
             y_label = 'Number of Staff'
-            objects = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
-                       'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+            data_labels = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
+                           'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
             data = [self.get_count_birth_jan(), self.get_count_birth_feb(),
                     self.get_count_birth_mar(), self.get_count_birth_apr(),
                     self.get_count_birth_may(), self.get_count_birth_jun(),
@@ -406,7 +415,14 @@ class CalcData(object):
                     self.get_count_birth_sep(), self.get_count_birth_oct(),
                     self.get_count_birth_nov(), self.get_count_birth_dec()]
             fig_title = 'Birth Months Chart'
-            i.create_bar_chart(title, y_label, objects, data, fig_title)
+            output_file_name = 'created_charts\\bar_chart.png'
+
+            ChartBar.set_title(ChartBar, title)
+            ChartBar.set_y_label(ChartBar, y_label)
+            ChartBar.set_labels(ChartBar, data_labels)
+            ChartBar.set_fig_title(ChartBar, fig_title)
+
+            ChartBar.create_bar_chart(ChartBar, data, output_file_name)
 
     def pie_chart(self, choice):
         chart = ChartPie()

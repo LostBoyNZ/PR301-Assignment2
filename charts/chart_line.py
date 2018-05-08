@@ -57,16 +57,15 @@ class ChartLine(object):
     def get_grid(self):
         return self.grid
 
-    def create_line_grid(self, age_list, salary_list):
+    def create_line_grid(self, data1, data2, output_file_name):
+        age_list = data1
+        salary_list = data2
         salary_list = [int(i) for i in salary_list]
         age_list = [int(i) for i in age_list]
         age_list, salary_list = zip(*sorted(zip(age_list, salary_list)))
 
         self.set_salary_list(self, salary_list)
         self.set_age_list(self, age_list)
-
-        age_list = self.get_age_list(self)
-        salary_list = self.get_salary_list(self)
 
         self.set_title(self, 'Salary Vs Age')
         self.set_y_label(self, 'Salary')
