@@ -24,7 +24,7 @@ class Washer(object):
     @staticmethod
     def set_case(data):
         """
-        >>> Washer.set_case('test')
+        >>> Washer.set_case(testingng')
         'Test'
         >>> Washer.set_case('TEST')
         'Test'
