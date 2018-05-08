@@ -453,9 +453,6 @@ class CalcData(object):
                     self.get_count_sales_group3(),
                     self.get_count_sales_group4()]
 
-        else:
-            print(Err.get_error_message(601))
-
         if title:
             ChartClass.set_title(ChartClass, title)
             ChartClass.set_y_label(ChartClass, y_label)
