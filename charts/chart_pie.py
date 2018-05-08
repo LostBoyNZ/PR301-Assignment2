@@ -2,6 +2,12 @@
 import sys
 
 try:
+    from charts.parent_chart import ParentChart
+except NameError and ModuleNotFoundError and ImportError:
+    print("Fatal Error - parent_chart.py not found.")
+    sys.exit()
+
+try:
     from errors import ErrorHandler as Err
 except NameError and ModuleNotFoundError and ImportError:
     print("Fatal Error - Errors.py not found.")
@@ -19,23 +25,18 @@ except Exception as e:
     print(Err.get_error_message(901, e))
     sys.exit()
 
-class ChartPie(object):  # Graham
 
-    def create_pie_chart(self, data, attributes):
-        chart_data = ""
-        title = attributes['title']
-        data_labels = attributes['data_labels']
-        window_title = attributes['window_title']
-
-        sizes = data
-        labels = data_labels
+class ChartPie(ParentChart):  # Graham
+    def create_chart(self):
+        sizes = self.get_data(self)
+        labels = self.get_fig_labels(self)
 
         fig1, ax1 = plt.subplots()
         ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
         ax1.axis('equal')
-        ax1.set_title(title)
+        ax1.set_title(self.get_fig_title(self))
         fig = plt.gcf()
-        fig.canvas.set_window_title(window_title)
+        fig.canvas.set_window_title(self.get_title(self))
 
         plt.show()
-        fig.savefig('created_charts\\pie_chart.png')
+        fig.savefig(self.get_output_file_name(self))
