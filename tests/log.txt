@@ -1,0 +1,56 @@
+Duplicate Key['A001', 'F', '21', '001', 'Normal', '12', '1-1-1996']
+Duplicate Key['Q001', 'M', '45', '999', 'Underweight', '725', '31-12-1971']
+Duplicate KeyA001
+Duplicate KeyQ001
+Duplicate KeyA002
+Duplicate KeyA05
+Duplicate KeyA003
+Duplicate KeyA004
+Duplicate KeyQ002
+Duplicate KeyQ003
+Duplicate KeyQ004
+Duplicate KeyQ005
+Duplicate KeyA05
+Duplicate Key006A
+Duplicate KeyA007B
+Duplicate KeyA008
+Duplicate KeyA009
+Duplicate KeyA010
+Duplicate KeyA011
+Duplicate KeyA012
+Duplicate KeyQ006
+Duplicate KeyQ007
+Duplicate KeyQ008
+Duplicate KeyQ009
+Duplicate KeyQ010
+Duplicate KeyQ011
+Duplicate KeyQ012
+Duplicate KeyQ013
+Duplicate KeyQ014
+Duplicate KeyA001
+Duplicate KeyA283
+Duplicate KeyA222
+Duplicate Key['A001', 'F', '21', '001', 'Normal', '12', '1-1-1996']
+Duplicate Key['Q001', 'M', '45', '999', 'Underweight', '725', '31-12-1971']
+Duplicate Key['A05', 'F', '21', '001', 'Normal', '12', '1-1-1996']
+Duplicate Key['A001', 'F', '21', '001', 'Underweight', '12', '1-1-1996']
+Duplicate KeyEmpid
+Duplicate KeyA001
+Duplicate KeyZ005
+Duplicate KeyNone
+Duplicate KeyEmpid
+Duplicate KeyA001
+Duplicate KeyZ005
+Duplicate KeyNone
+Duplicate KeyEmpid
+Duplicate KeyA001
+Duplicate KeyZ005
+Duplicate KeyZ005
+Duplicate KeyEmpid
+Duplicate KeyA001
+Duplicate KeyZ005
+Duplicate KeyNone
+Duplicate KeyEmpid
+Duplicate KeyA001
+Duplicate KeyZ005
+Duplicate KeyZ005
