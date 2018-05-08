@@ -1,5 +1,5 @@
 from file_reader import FileReader
-from file_controller import FileController
+from unittest.mock import patch
 import unittest
 
 
@@ -50,3 +50,17 @@ class TestFileReader(unittest.TestCase):
 
         # Assert
         self.assertTrue(result == expected_result)
+
+    def test_load_pickle_file(self):
+        # Arrange
+        user_input = "testdata\\test_pickle_load.txt"
+        expected_data_from_file =\
+            ['€\x03X\x1d\x00\x00\x00This is being saved to a fileq\x00.']
+        result = ""
+
+        # Act
+        with patch('builtins.input', side_effect=user_input):
+            result = FileReader.load_pickle_file(FileReader, user_input)
+
+        # Assert
+        self.assertTrue(result == expected_data_from_file)
