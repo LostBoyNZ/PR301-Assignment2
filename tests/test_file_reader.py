@@ -1,6 +1,8 @@
 from file_reader import FileReader
 from unittest.mock import patch
 import unittest
+import sys
+import io
 
 
 class TestFileReader(unittest.TestCase):
@@ -53,14 +55,43 @@ class TestFileReader(unittest.TestCase):
 
     def test_load_pickle_file(self):
         # Arrange
-        user_input = "testdata\\test_pickle_load.txt"
+        test_file_name = "testdata\\test_pickle_load.txt"
+        expected_data_from_file =\
+            ['€\x03X\x1d\x00\x00\x00This is being saved to a fileq\x00.']
+        result = ""
+
+        # Act
+        result = FileReader.load_pickle_file(FileReader, test_file_name)
+
+        # Assert
+        self.assertTrue(result == expected_data_from_file)
+
+    def test_load_pickle_file_by_inputting_file_name(self):
+        # Arrange
+        user_input = "P"
         expected_data_from_file =\
             ['€\x03X\x1d\x00\x00\x00This is being saved to a fileq\x00.']
         result = ""
 
         # Act
         with patch('builtins.input', side_effect=user_input):
-            result = FileReader.load_pickle_file(FileReader, user_input)
+            result = FileReader.load_pickle_file(FileReader)
 
         # Assert
         self.assertTrue(result == expected_data_from_file)
+
+    def test_load_pickle_file_error_by_inputting_wrong_file_name(self):
+        # Arrange
+        user_input = "A"
+        expected_string = "File not found"
+        result = ""
+
+        # Act
+        captured_output = io.StringIO()
+        sys.stdout = captured_output
+        with patch('builtins.input', side_effect=user_input):
+            result = FileReader.load_pickle_file(FileReader)
+        sys.stdout = sys.__stdout__
+
+        # Assert
+        self.assertTrue(expected_string in captured_output.getvalue())
