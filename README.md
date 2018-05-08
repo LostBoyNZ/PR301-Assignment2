@@ -1,3 +1,3 @@
 # PR301-Assignment2
 
-Before doing any refactoring, and with tests that have 100% coverage for methods that will be changed during refactoring.
+After finishing all of the refactoring, at the end of Assignment 2. All my partial changes are in the other branches also, with version1.x for the 1st bad smell, version2.x for the second bad smell and so on.
