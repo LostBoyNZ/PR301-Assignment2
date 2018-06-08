@@ -2,6 +2,12 @@
 import sys
 
 try:
+    from charts.parent_chart import ParentChart
+except NameError and ModuleNotFoundError and ImportError:
+    print("Fatal Error - parent_chart.py not found.")
+    sys.exit()
+
+try:
     from errors import ErrorHandler as Err
 except NameError and ModuleNotFoundError and ImportError:
     print("Fatal Error - Errors.py not found.")
@@ -20,16 +26,16 @@ except NameError and ModuleNotFoundError and ImportError:
     sys.exit()
 
 
-class ChartBar(object):
+class ChartBar(ParentChart):
+    def create_chart(self):
+        y_pos = np.arange(len(self.get_fig_labels(self)))
+        plt.bar(y_pos, self.get_data(self), align='center', alpha=0.5)
+        plt.xticks(y_pos, self.get_fig_labels(self))
 
-    @staticmethod
-    def create_bar_chart(title, y_label, objects, data, fig_title):
-        y_pos = np.arange(len(objects))
-        plt.bar(y_pos, data, align='center', alpha=0.5)
-        plt.xticks(y_pos, objects)
-        plt.ylabel(y_label)
-        plt.title(title)
+        plt.ylabel(self.get_y_label(self))
+        plt.title(self.get_title(self))
+
         fig = plt.gcf()
-        fig.canvas.set_window_title(fig_title)
+        fig.canvas.set_window_title(self.get_title(self))
         plt.show()
-        fig.savefig('created_charts\\bar_chart.png')
+        fig.savefig(self.get_output_file_name(self))
